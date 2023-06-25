@@ -16,7 +16,7 @@
                         <li><a href="index.html"><i class="fab fa-vimeo-v"></i></a></li>
                         <li><a href="index.html"><i class="fab fa-google-plus-g"></i></a></li>
                     </ul>
-                    <div class="language">
+                    {{-- <div class="language">
                         <div class="lang-btn">
                             <span class="flag"><img src={{asset("assets/images/icons/icon-lang.png")}} alt="" title="English"></span>
                             <span class="txt">English</span>
@@ -30,16 +30,16 @@
                                 <li><a href="index.html">Russian</a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
+                    @auth
                     <div class="price-box">
-                        <span>USD</span>
+                            
+                        <span>{{Auth::user()->name}}</span>
                         <ul class="price-list clearfix">
-                            <li><a href="index.html">USD</a></li>
-                            <li><a href="index.html">UK</a></li>
-                            <li><a href="index.html">URO</a></li>
-                            <li><a href="index.html">Spanish</a></li>
+                            <li><a href={{route('logout.web')}}>Logout</a></li>
                         </ul>
                     </div>
+                    @endauth
                 </div>
             </div>
         </div>
@@ -178,9 +178,11 @@
                         </div>
                     </li>
                     <li><a href="index.html"><i class="flaticon-like"></i></a></li>
+                    @guest
                     <li><a href="{{ route('account.web') }}"><i class="flaticon-user"></i></a></li>
+                    @endguest
                     <li class="shop-cart">
-                        <a href="shop.html"><i class="flaticon-shopping-cart-1"></i><span>3</span></a>
+                        <a href="{{route('cart.web')}}"><i class="flaticon-shopping-cart-1"></i><span id="cart-count">{{ session()->has('cart') ? count(session('cart')['items']) : 0 }}</span></a>
                     </li>
                 </ul>
             </div>

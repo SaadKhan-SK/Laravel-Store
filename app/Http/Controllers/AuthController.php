@@ -35,7 +35,7 @@ class AuthController extends Controller
                 }
                 else{
                     
-                    return redirect()->route('user.dashboard')->with('success',"Login Successfully");
+                    return redirect()->route('shop.web')->with('success',"Login Successfully");
                 }
             }
             else

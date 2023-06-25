@@ -19,39 +19,35 @@
 <!-- service-page-section -->
 <section class="service-page-section">
     <div class="auto-container">
-        <div class="service-block-two mb-100">
-            <div class="inner-box">
-                <div class="row clearfix">
-                    <div class="col-lg-6 col-md-6 col-sm-12 image-column">
-                        <figure class="image-box mr-30"><img src="assets/images/service/service-1.jpg" alt=""></figure>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 content-column">
-                        <div class="content-box ml-30 mr-100">
-                            <h2><a href="service.html">Fashion Design</a></h2>
-                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. sed ut perspici</p>
-                            <a href="service.html" class="theme-btn-one">View Catalog<i class="flaticon-right-1"></i></a>
+        @foreach($data['services'] as $index => $service)
+            <div class="service-block-two mb-100">
+                <div class="inner-box">
+                    <div class="row clearfix">
+                        @if($index % 2 == 0)
+                            <div class="col-lg-6 col-md-6 col-sm-12 image-column">
+                                <figure class="image-box mr-30"><img src="{{asset('upload/'.$service->image)}}" alt=""></figure>
+                            </div>
+                        @endif
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 content-column">
+                            <div class="content-box ml-30 @if($index % 2 == 0) mr-100 @else text-right ml-100 mr-30 @endif">
+                                <h2><a href="service.html">{{$service->name}}</a></h2>
+                                {!! $service->description !!}
+                                <a href="service.html" class="theme-btn-one">View Catalog<i class="flaticon-right-1"></i></a>
+                            </div>
                         </div>
+
+                        @if($index % 2 != 0)
+                            <div class="col-lg-6 col-md-6 col-sm-12 image-column">
+                                <figure class="image-box ml-30"><img src="{{asset('upload/'.$service->image)}}" alt=""></figure>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="service-block-two mb-100">
-            <div class="inner-box">
-                <div class="row clearfix">
-                    <div class="col-lg-6 col-md-6 col-sm-12 content-column">
-                        <div class="content-box text-right ml-100 mr-30">
-                            <h2><a href="service.html">Furniture Design</a></h2>
-                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. sed ut perspici</p>
-                            <a href="service.html" class="theme-btn-one">View Catalog<i class="flaticon-right-1"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 image-column">
-                        <figure class="image-box ml-30"><img src="assets/images/service/service-2.jpg" alt=""></figure>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="service-block-two">
+        @endforeach
+
+        {{-- <div class="service-block-two">
             <div class="inner-box">
                 <div class="row clearfix">
                     <div class="col-lg-6 col-md-6 col-sm-12 image-column">
@@ -66,7 +62,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </section>
 <!-- service-page-section end -->    

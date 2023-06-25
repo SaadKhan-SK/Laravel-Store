@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CmsService;
+use App\Models\Product;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class WebController extends Controller
 {
@@ -15,9 +21,16 @@ class WebController extends Controller
     {
         return view('web.pages.about');
     }
+    public function cart()
+    {
+        return view('web.pages.cart');
+    }
     public function service()
     {
-        return view('web.pages.services');
+        $services = CmsService::all();
+        $data['services'] = $services;
+
+        return view('web.pages.services')->with(["data" => $data]);
     }
     public function team()
     {
@@ -27,32 +40,92 @@ class WebController extends Controller
     {
         return view('web.pages.account');
     }
-    public function register(Request $request){
-        // dd($request);
-        if($request->isMethod("post"))
-        {
-            $this->validate($request,[
-                'email'=>"required|email|unique:users",
-                'name'=>"required",
-                'password'=>"required|min:8|confirmed"
+    public function register(Request $request)
+    {
+        if ($request->isMethod("post")) {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email|unique:users',
+                'name' => 'required',
+                'password' => 'required|min:8|confirmed',
+                'role' => 'required',
             ]);
-            $data=$request->toArray();
-            $user = User::create($data);
-            $user->role = "User";
-            $result = $user->save();
-            auth()->login($user);
-            if($result)
-            {
-                return redirect()->to(route('shop.web'))->with('success',"Successfully Registered");
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
             }
-            else
-            {
-                return redirect()->back()->with('fail',"Something went wrong!");
+
+            $data = $request->only(['name', 'email', 'password', 'role']);
+
+
+            $user = User::create($data);
+            auth()->login($user);
+
+            return response()->json(['message' => 'Successfully registered'], 200);
+        }
+    }
+    public function login(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'password' => 'required'
+            ], [
+                'email.required' => 'The Email is required.',
+                'email.email' => 'Please enter a valid Email Address.',
+                'password.required' => 'Password is required.'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            if (
+                Auth::attempt([
+                    'email' => $request->email,
+                    'password' => $request->password
+                ])
+            ) {
+                if (Auth()->user()->role == 'Admin') {
+                    return response()->json(['redirect' => route('admin.dashboard'), 'message' => 'Login Successfully'], 200);
+                } else if (Auth()->user()->role == 'Vendor') {
+                    return response()->json(['redirect' => route('vendor.dashboard'), 'message' => 'Login Successfully'], 200);
+                } else {
+                    return response()->json([
+                        'redirect' => route('shop.web'),
+                        'message' => 'Successfully logged in'
+                    ], 200);
+
+                }
+            } else {
+                return response()->json(['error' => 'Wrong Credentials'], 422);
             }
         }
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return Redirect::route('account.web')->with('success', "Logout Successfully!");
+    }
     public function shop()
     {
-        return view('web.pages.shop');
+        $product = Product::paginate(12);
+        $data['products'] = $product;
+        return view('web.pages.shop')->with(["data" => $data]);
     }
+    public function product(Request $request, $slug)
+    {
+        $product = Product::where(['slug' => $slug])->with('category', 'tags','gallery')->first();
+        $data['products'] = $product->toArray();
+
+        $tagNames = $product->tags->pluck('name')->implode(', '); // Convert tags array to comma-separated string
+        $data['tags'] = $tagNames;
+
+        // echo "<pre>";
+        // print_r($data);
+        // exit;
+        return view('web.pages.product-detail')->with(["data" => $data]);
+    }
+
+
 }

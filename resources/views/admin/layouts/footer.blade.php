@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <?php echo date('Y'); ?> © Car Auction.
+                <?php echo date('Y'); ?> © E-commerce.
             </div>
 
         </div>
@@ -77,7 +77,6 @@
             <div class="form-check form-check-inline">
 
                 <input class="form-check-input" type="radio" name="layout-width" id="layout-width-fuild"
-
                     value="fuild" onchange="document.body.setAttribute('data-layout-size', 'fluid')">
 
                 <label class="form-check-label" for="layout-width-fuild">Fluid</label>
@@ -87,7 +86,6 @@
             <div class="form-check form-check-inline">
 
                 <input class="form-check-input" type="radio" name="layout-width" id="layout-width-boxed"
-
                     value="boxed" onchange="document.body.setAttribute('data-layout-size', 'boxed')">
 
                 <label class="form-check-label" for="layout-width-boxed">Boxed</label>
@@ -185,8 +183,9 @@
 
 
 
-                                
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="{{ asset('assets/admin/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 
@@ -202,6 +201,7 @@
 
 <script src="{{ asset('assets/admin/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
+<script src="{{ asset('assets/admin/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
 <script src="{{ asset('assets/admin/libs/metismenu/metisMenu.min.js') }}"></script>
 
 <script src="{{ asset('assets/admin/libs/simplebar/simplebar.min.js') }}"></script>
@@ -210,17 +210,116 @@
 
 <script src="{{ asset('assets/admin/libs/feather-icons/feather.min.js') }}"></script>
 <!-- pace js -->
-<script src="{{ asset('assets/admin/libs/pace-js/pace.min.js') }}"></script>
-
+<script src="{{ asset('assets/admin/libs/choices.js/public/assets/scripts/choices.min.js') }}"></script>
+{{-- <script src="{{ asset('assets/admin/libs/pace-js/pace.min.js') }}"></script> --}}
+<script src="{{ asset('assets/admin/libs/@simonwep/pickr/pickr.min.js') }}"></script>
+<script src="{{ asset('assets/admin/libs/@simonwep/pickr/pickr.es5.min.js') }}"></script>
+<script src="{{ asset('assets/admin/js/pages/form-advanced.init.js') }}"></script>
+<script src="{{ asset('assets/admin/libs/flatpickr/flatpickr.min.js') }}"></script>
 <!-- dashboard init -->
 <script src="{{ asset('assets/admin/js/pages/dashboard.init.js') }}"></script>
 
-
+<!-- glightbox js -->
+<script src="{{ asset('assets/admin/libs/glightbox/js/glightbox.min.js')}}"></script>
+<!-- choices js -->
+<script src="{{asset('assets/admin/libs/choices.js/public/assets/scripts/choices.min.js')}}"></script>
+<!-- lightbox init -->
+<script src="{{ asset('assets/admin//js/pages/lightbox.init.js')}}"></script>
 <!-- App js -->
 <script src="{{ asset('assets/admin/js/app.js') }}"></script>
+<script>
+    //Classic editors
+    $(document).ready(function() {
+
+        // var dataTable =
+        // var productsData = {!! isset($data['products']) ? json_encode($data['products']) : '[]' !!};
+        
+        
 
 
-                               
+
+
+
+
+
+
+
+
+        $('.discount input[type=checkbox]').change(function() {
+            if ($(this).prop('checked')) {
+                $('.discount_percent').show();
+            } else {
+                $('.discount_percent').hide();
+            }
+        });
+        $('.discount input[type=checkbox]').trigger('change');
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#previewImage').attr('src', e.target.result).fadeIn('slow');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imageInput").change(function() {
+            readURL(this);
+        });
+
+
+        var multipleCancelButton = new Choices(
+            '#tags', {
+                removeItemButton: true,
+            }
+        );
+
+
+
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .then(function(editor) {
+                editor.ui.view.editable.element.style.height = '200px';
+            })
+            .catch(function(error) {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#small_description'))
+            .then(function(editor) {
+                editor.ui.view.editable.element.style.height = '200px';
+            })
+            .catch(function(error) {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#tnc'))
+            .then(function(editor) {
+                editor.ui.view.editable.element.style.height = '200px';
+            })
+            .catch(function(error) {
+                console.error(error);
+            });
+        flatpickr('#publish_date', {
+            enableTime: false,
+            minDate: "today",
+            dateFormat: "Y-m-d"
+        });
+
+
+
+        
+
+        
+
+
+
+
+    })
+</script>
+
 
 </body>
 

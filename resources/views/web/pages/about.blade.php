@@ -9,7 +9,7 @@
         <div class="content-box">
             <h1>About Us</h1>
             <ul class="bread-crumb clearfix">
-                <li><i class="flaticon-home-1"></i><a href="index.html">Home</a></li>
+                <li><i class="flaticon-home-1"></i><a href="{{route('home.web')}}">Home</a></li>
                 <li>About Us</li>
             </ul>
         </div>
