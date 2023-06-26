@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CmsService;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -115,7 +116,7 @@ class WebController extends Controller
     }
     public function product(Request $request, $slug)
     {
-        $product = Product::where(['slug' => $slug])->with('category', 'tags','gallery')->first();
+        $product = Product::where(['slug' => $slug])->with('category', 'tags', 'gallery')->first();
         $data['products'] = $product->toArray();
 
         $tagNames = $product->tags->pluck('name')->implode(', '); // Convert tags array to comma-separated string
@@ -125,6 +126,86 @@ class WebController extends Controller
         // print_r($data);
         // exit;
         return view('web.pages.product-detail')->with(["data" => $data]);
+    }
+    public function addReview(Request $request)
+    {
+        // Validate the incoming request data
+        $rules = [
+            'name' => 'required',
+            'email' => 'required|email',
+            'message' => 'required',
+            'review' => 'required',
+        ];
+        $errors = [
+            'name.required' => 'Please Enter Your Name',
+            'email.required' => 'Please Enter Your Email Address',
+            'email.email' => 'Please Enter A Valid Email',
+            'message.required' => 'Please Enter Your Message',
+            'review.required' => 'Please Give a Star',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $errors);
+
+        if ($validator->fails()) {
+            $response = [
+                'status' => 0,
+                'message' => $validator->errors()->first(),
+            ];
+
+            return response()->json($response, 200);
+        }
+
+        $user = empty(auth()->user()->id) ? null : auth()->user()->id;
+        $data = [
+            'user_id' => $user,
+            'product_id' => $request->product_id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+            'review' => $request->review,
+        ];
+
+        $review = new Review();
+        $review->fill($data)->save();
+
+        $response = [
+            'status' => 1,
+            'message' => 'Review added successfully',
+            'review' => $review,
+        ];
+
+        return response()->json($response, 200);
+    }
+
+    public function allReviews(Request $request)
+    {
+        $review = Review::with('product','user')->where(['product_id'=>$request->id])->get();
+
+        $count = count($review);
+
+        // echo "<pre>";
+        // echo print_r($review->toArray());
+        // echo exit;
+
+        if (!$review || empty($review)) {
+            // review is empty
+            $response = [
+                "status" => 0,
+                "message" => 'No Review!',
+                "review" => [],
+            ];
+
+            return response()->json($response, 200);
+        }
+
+        $response = [
+            "status" => 1,
+            // "message" => 'Review retrieved successfully!',
+            "review" => $review->toArray(),
+            "count" => $count,
+        ];
+
+        return response()->json($response, 200);
     }
 
 

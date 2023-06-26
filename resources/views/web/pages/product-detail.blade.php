@@ -44,7 +44,8 @@
                                         @foreach ($data['products']['gallery'] as $index => $item)
                                             <li>
                                                 <a data-slide-index="{{ $index + 1 }}" href="#">
-                                                    <figure><img src="{{ asset('upload/' . $item['image']) }}" alt="">
+                                                    <figure><img src="{{ asset('upload/' . $item['image']) }}"
+                                                            alt="">
                                                     </figure>
                                                 </a>
                                             </li>
@@ -137,9 +138,11 @@
                             </div>
                             <div class="othre-options clearfix">
                                 <div class="item-quantity">
-                                    <input class="quantity-spinner" data-product-id="{{$data['products']['id']}}" type="text" value="1" name="quantity">
+                                    <input class="quantity-spinner" data-product-id="{{ $data['products']['id'] }}"
+                                        type="text" value="1" name="quantity">
                                 </div>
-                                <div class="btn-box"><button type="button" class="theme-btn-two add-to-cart-btn" data-product-id="{{$data['products']['id']}}">Add to cart</button></div>
+                                <div class="btn-box"><button type="button" class="theme-btn-two add-to-cart-btn"
+                                        data-product-id="{{ $data['products']['id'] }}">Add to cart</button></div>
                                 <ul class="info clearfix">
                                     <li><a href="product-details.html"><i class="flaticon-heart"></i></a></li>
                                     <li><a href="product-details.html"><i class="flaticon-search"></i></a></li>
@@ -172,7 +175,7 @@
                     <div class="tab-btn-box">
                         <ul class="tab-btns tab-buttons clearfix">
                             <li class="tab-btn active-btn" data-tab="#tab-1">Description</li>
-                            <li class="tab-btn " data-tab="#tab-2">Reviews(1)</li>
+                            <li class="tab-btn " data-tab="#tab-2">Reviews <span id="review-count"></span> </li>
                         </ul>
                     </div>
                     <div class="tabs-content">
@@ -182,8 +185,10 @@
                             </div>
                         </div>
                         <div class="tab" id="tab-2">
-                            <div class="review-box">
-                                <h5>1 Review for Multi-Way Ultra Crop Top</h5>
+                            <div class="review-box" id="review-box">
+                            <div class="no-review mb-3" id="no-review">
+                            </div>
+                                {{-- <h5>1 Review for Multi-Way Ultra Crop Top</h5>
                                 <div class="review-inner">
                                     <figure class="image-box"><img
                                             src="{{ asset('assets/images/resource/review-1.png"') }}" alt="">
@@ -203,33 +208,56 @@
                                             veritatis et quasi arch tecto beatae vitae dicta.</p>
                                     </div>
                                 </div>
-                                <div class="replay-inner">
-                                    <h5>Be First to Review For “Multi-Way Ultra Crop Top”</h5>
-                                    <div class="rating-box clearfix">
-                                        <h6>Your Rating</h6>
+                                <div class="review-inner">
+                                    <figure class="image-box"><img
+                                            src="{{ asset('assets/images/resource/review-1.png"') }}" alt="">
+                                    </figure>
+                                    <div class="inner">
                                         <ul class="rating clearfix">
-                                            <li><i class="flaticon-star-1"></i></li>
-                                            <li><i class="flaticon-star-1"></i></li>
-                                            <li><i class="flaticon-star-1"></i></li>
-                                            <li><i class="flaticon-star-1"></i></li>
+                                            <li><i class="flaticon-star"></i></li>
+                                            <li><i class="flaticon-star"></i></li>
+                                            <li><i class="flaticon-star"></i></li>
+                                            <li><i class="flaticon-star"></i></li>
                                             <li><i class="flaticon-star-1"></i></li>
                                         </ul>
+                                        <h6>Eileen Alene <span>- May 1, 2020</span></h6>
+                                        <p>Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt
+                                            mollit anim est laborum. Sed perspiciatis unde omnis natus error sit voluptatem
+                                            accusa dolore mque laudant totam rem aperiam eaque ipsa quae ab illo inventore
+                                            veritatis et quasi arch tecto beatae vitae dicta.</p>
                                     </div>
-                                    <form action="contact.html" method="post" class="review-form">
+                                </div> --}}
+                                <div class="replay-inner">
+                                    {{-- <h5>Be First to Review For “Multi-Way Ultra Crop Top”</h5> --}}
+                                    <form id="review-form" method="POST" class="review-form">
+                                        @csrf
+                                        <div class="rating-box clearfix">
+                                            <h6>Your Rating</h6>
+                                            <ul class="rating clearfix" id="rating-stars">
+                                                <li><i class="flaticon-star-1"></i></li>
+                                                <li><i class="flaticon-star-1"></i></li>
+                                                <li><i class="flaticon-star-1"></i></li>
+                                                <li><i class="flaticon-star-1"></i></li>
+                                                <li><i class="flaticon-star-1"></i></li>
+                                            </ul>
+                                            <input type="hidden" name="review" id="rating-value">
+                                            <input type="hidden" name="product_id" id="product_id"
+                                                value="{{ $data['products']['id'] }}">
+                                        </div>
                                         <div class="row clearfix">
                                             <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                                 <label>Your Review</label>
-                                                <textarea name="message"></textarea>
+                                                <textarea name="message" id="message"></textarea>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>Your Name</label>
-                                                <input type="text" name="name" required="">
+                                                <input type="text" name="name" id="name">
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>Your Emai</label>
-                                                <input type="email" name="email" required="">
+                                                <input type="email" name="email" id="email">
                                             </div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            {{-- <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                                 <div class="custom-controls-stacked">
                                                     <label class="custom-control material-checkbox">
                                                         <input type="checkbox" class="material-control-input">
@@ -238,10 +266,10 @@
                                                             browser for the next time I comment</span>
                                                     </label>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
-                                                <button type="submit" class="theme-btn-two">Submit Your Review<i
-                                                        class="flaticon-right-1"></i></button>
+                                                <button type="submit" id="review-button" class="theme-btn-two">Submit
+                                                    Your Review<i class="flaticon-right-1"></i></button>
                                             </div>
                                         </div>
                                     </form>
@@ -420,5 +448,204 @@
                 });
             }
         })
+    </script>
+@endpush
+@push('review')
+    <script>
+        $(document).ready(function() {
+
+            function updateReviewCount() {
+                var productID = $('#product_id').val();
+                $.ajax({
+                    url: '{{ route('all-review.web', ['id' => '']) }}' + productID,
+                    method: 'GET',
+                    success: function(response) {
+                        $('#review-count').text(response.count);
+                    },
+                    error: function() {
+                        console.log('Error occurred while fetching review count.');
+                    }
+                });
+            }
+
+            function allReviews() {
+                var productID = $('#product_id').val();
+                $.ajax({
+                        method: 'GET',
+                        url: '{{ route('all-review.web', ['id' => '']) }}' + productID,
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status === 1) {
+                                var reviewBox = $('#review-box');
+                                var allReviewBox = $('#review-box .review-inner');
+                                var NoReviewBox = $('#review-box .no-review');
+                                
+                                if (response.review.length > 0) {
+                                    allReviewBox.remove();
+                                    NoReviewBox.remove();
+                                    response.review.forEach(function(review) {
+                                        var ratingStars = '';
+
+                                        for (var i = 0; i < 5; i++) {
+                                            var starClass = (i < review.review) ? 'flaticon-star' :
+                                                'flaticon-star-1';
+                                            ratingStars += '<li><i class="' + starClass +
+                                                '"></i></li>';
+                                        }
+
+                                        var userName = review.name ;
+                                        var userImage = review.user ? '{{ asset("upload/' + review.user.image + '") }}' : '';
+                                        var createdAt = new Date(review.created_at);
+                                        var formattedDate = createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                                        var reviewHtml = '<div class="review-inner">' +
+                                            '<figure class="image-box"><img src="' + userImage +
+                                            '" alt=""></figure>' +
+                                            '<div class="inner">' +
+                                            '<ul class="rating clearfix">' + ratingStars + '</ul>' +
+                                            '<h6>' + userName + '<span>- ' + formattedDate +
+                                            '</span></h6>' +
+                                            '<p>' + review.message + '</p>' +
+                                            '</div>' +
+                                            '</div>';
+                                        reviewBox.prepend(reviewHtml);
+                                    });
+                                
+
+                            } else {
+                                NoReviewBox.html('<p class="mb-3">No reviews available.</p><p class="mb-3">Be the First to Review this Product</p>');
+                            }
+                        } else {
+                            console.log(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('An error occurred while fetching reviews.');
+                    }
+                });
+        }
+
+        allReviews();
+        updateReviewCount();
+        // Handle rating selection
+        var previousRating = 0;
+
+        $('#rating-stars li').click(function() {
+            var currentRating = $(this).index() + 1;
+
+            if (previousRating < currentRating) {
+                $(this).prevAll('li').addClass('selected');
+                $(this).prevAll('li').find('i').removeClass('flaticon-star-1').addClass(
+                    'flaticon-star');
+                $(this).addClass('selected');
+                $(this).find('i').removeClass('flaticon-star-1').addClass('flaticon-star');
+            } else {
+                $(this).nextAll('li').removeClass('selected');
+                $(this).nextAll('li').find('i').removeClass('flaticon-star').addClass(
+                    'flaticon-star-1');
+                $(this).removeClass('selected');
+                $(this).find('i').removeClass('flaticon-star').addClass('flaticon-star-1');
+            }
+
+            $('#rating-value').val(currentRating);
+
+            previousRating = currentRating;
+        });
+
+
+
+        // Handle form submission
+        $('#review-form').submit(function(e) {
+            e.preventDefault(); // Prevent the form from submitting normally
+
+            var form = $(this);
+            var formData = form.serialize(); // Serialize the form data
+
+            // Replace flaticon-star-1 with flaticon-star in the formData
+            formData = formData.replace(/flaticon-star-1/g, 'flaticon-star');
+
+            $.ajax({
+                method: 'POST',
+                url: '{{ route('add-review.web') }}',
+                dataType: 'json',
+                data: formData,
+                success: function(response) {
+                    // Handle the success response
+
+                    // Replace flaticon-star with flaticon-star-1 in the rating stars
+                    if (response.status == 0) {
+                        var toast = Swal.fire({
+                            icon: 'warning',
+                            title: response.message,
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 1000,
+                            timerProgressBar: true,
+                            showClass: {
+                                popup: 'swal2-noanimation',
+                                backdrop: 'swal2-noanimation'
+                            },
+                            hideClass: {
+                                popup: '',
+                                backdrop: ''
+                            }
+                        });
+                    }
+                    if (response.status == 1) {
+
+
+                        $('#rating-stars li i').removeClass('flaticon-star').addClass(
+                            'flaticon-star-1');
+
+                        // Clear the form
+                        form.trigger('reset');
+
+                        var toast = Swal.fire({
+                            icon: 'success',
+                            title: response.message,
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 1000,
+                            timerProgressBar: true,
+                            showClass: {
+                                popup: 'swal2-noanimation',
+                                backdrop: 'swal2-noanimation'
+                            },
+                            hideClass: {
+                                popup: '',
+                                backdrop: ''
+                            }
+                        });
+                        allReviews();
+                        updateReviewCount();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response
+
+                    // Display an error message
+                    var toast = Swal.fire({
+                        icon: 'error',
+                        title: 'An error occurred while submitting the review.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1000,
+                        timerProgressBar: true,
+                        showClass: {
+                            popup: 'swal2-noanimation',
+                            backdrop: 'swal2-noanimation'
+                        },
+                        hideClass: {
+                            popup: '',
+                            backdrop: ''
+                        }
+                    });
+                }
+            });
+        });
+        });
     </script>
 @endpush

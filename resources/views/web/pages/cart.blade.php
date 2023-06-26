@@ -161,9 +161,9 @@
                         var empty = '<td>&nbsp;</td>'+
                         '<td>&nbsp;</td>'+
                         '<td>&nbsp;</td>'+
-                        '<td><h2 class="mt-5 text-center">Cart is empty!</h2></td>'
+                        '<td><h2 class="mt-5 mb-3 text-center">Your Cart is empty!</h2><a href="{{route("shop.web")}}" class="theme-btn-two text-center">Continue Shopping<i class="flaticon-right-1"></i></a></td>'
                         cartTable.append(empty);
-                        console.log('Cart is empty!');
+                        console.log('<span class="mb-3">Cart is empty!</span>');
                     }
                 },
                 error: function(xhr, status, error) {

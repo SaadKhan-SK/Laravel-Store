@@ -27,7 +27,9 @@ Route::get('/about',[WebController::class,'about'])->name("about.web");
 Route::get('/service',[WebController::class,'service'])->name("service.web");
 Route::get('/team',[WebController::class,'team'])->name("team.web");
 Route::get('/shop',[WebController::class,'shop'])->name("shop.web");
-Route::get('/product/{slug}',[WebController::class,'product'])->name("product.web");
+Route::match(['get','post'],'/product/{slug}',[WebController::class,'product'])->name("product.web");
+Route::post('/add-review',[WebController::class,'addReview'])->name("add-review.web");
+Route::get('/all-review',[WebController::class,'allReviews'])->name("all-review.web");
 Route::get('/account',[WebController::class,'account'])->name("account.web")->middleware("auth.check");
 
 // Web Authentication Routes

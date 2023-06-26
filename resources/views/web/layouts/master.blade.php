@@ -199,6 +199,7 @@
         @stack('login')
         @stack('cart')
         @stack('product-detail')
+        @stack('review')
         <script>
             $(document).ready(function() {
                 function updateCartCount() {

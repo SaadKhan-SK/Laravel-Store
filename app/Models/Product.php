@@ -50,4 +50,8 @@ class Product extends Model
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
