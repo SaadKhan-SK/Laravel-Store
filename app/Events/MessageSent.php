@@ -32,11 +32,7 @@ class MessageSent implements ShouldBroadcastNow
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-<<<<<<< HEAD
-    public function broadcastOn(Message $message)
-=======
     public function broadcastOn()
->>>>>>> e0767c3501f6cb5014f1d6ae9ded71a6cbdc5fe3
     {
         // Broadcast the message to the inbox channel
         return new Channel('inbox.' . $this->message->inbox_id);
