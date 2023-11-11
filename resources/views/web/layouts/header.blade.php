@@ -77,7 +77,7 @@
                                         </li>
                                     </ul> --}}
                                 </li>
-                                <li class="dropdown"><a href="index.html">Pages</a>
+                                <li class="dropdown"><a href="javascript:void(0)">Pages</a>
                                     <ul>
                                         <li><a href="{{ route('about.web') }}">About Us</a></li>
                                         <li><a href="{{ route('service.web') }}">Our Service</a></li>

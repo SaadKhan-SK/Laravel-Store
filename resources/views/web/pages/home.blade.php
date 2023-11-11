@@ -4,22 +4,25 @@
     <section class="banner-style-one">
         <div class="pattern-layer" style="background-image: url(assets/images/shape/shape-1.png);"></div>
         <div class="banner-carousel owl-theme owl-carousel">
+            @foreach ($data['sliders'] as $index => $slider)
+                
             <div class="slide-item">
                 <div class="auto-container">
                     <div class="content-inner">
                         <div class="content-box">
-                            <h1>Up To <br /><span>50%</span> Discount</h1>
-                            <h3>Summer Lookbook - 2020</h3>
-                            <p>New Modern Stylist Fashionable Men's Wear Jeans Shirt.</p>
+                            <h1>{{$slider->heading}} <br /><span>{{$slider->discount}}</span> {{$slider->heading_2}}</h1>
+                            <h3>{{$slider->sub_heading}}</h3>
+                            <p>{!!$slider->description!!}.</p>
                             <div class="btn-box">
-                                <a href="index.html" class="theme-btn-one">Explore Now<i class="flaticon-right-1"></i></a>
+                                <a href="index.html" class="theme-btn-one">{{$slider->button}}<i class="flaticon-right-1"></i></a>
                             </div>
                         </div>
-                        <figure class="image-box image-1"><img src="assets/images/banner/banner-image-1.png" alt=""></figure>
+                        <figure class="image-box image-{{$index+1}}"><img src="{{'upload/'.$slider->image}}" alt=""></figure>
                     </div> 
                 </div>
             </div>
-            <div class="slide-item">
+            @endforeach
+            {{-- <div class="slide-item">
                 <div class="auto-container">
                     <div class="content-inner">
                         <div class="content-box">
@@ -48,7 +51,7 @@
                         <figure class="image-box imgae-3"><img src="assets/images/banner/banner-image-3.png" alt=""></figure>
                     </div> 
                 </div>
-            </div>
+            </div> --}}
         </div>
     </section>
     <!-- banner-section end -->
@@ -63,13 +66,18 @@
                 <span class="separator" style="background-image: url(assets/images/icons/separator-1.png);"></span>
             </div>
             <div class="row clearfix">
+                @foreach ($data['categories'] as $index => $category)
+                    @php
+                        $delay = $index * 200; // Calculate the delay based on the index
+                    @endphp
                 <div class="col-lg-3 col-md-6 col-sm-12 category-block">
-                    <div class="category-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                        <figure class="image-box"><img src="assets/images/resource/category-1.png" alt=""></figure>
-                        <h5><a href="index.html">Women Collections</a></h5>
+                    <div class="category-block-one wow fadeInUp animated animated" data-wow-delay="{{$delay}}ms" data-wow-duration="1500ms">
+                        <figure class="image-box"><img src="{{'upload/'.$category->image}}" alt=""></figure>
+                        <h5><a href="index.html">{{$category->name}}</a></h5>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 category-block">
+                @endforeach
+                {{-- <div class="col-lg-3 col-md-6 col-sm-12 category-block">
                     <div class="category-block-one wow fadeInUp animated animated" data-wow-delay="200ms" data-wow-duration="1500ms">
                         <figure class="image-box"><img src="assets/images/resource/category-2.png" alt=""></figure>
                         <h5><a href="index.html">Kids Collections</a></h5>
@@ -86,7 +94,7 @@
                         <figure class="image-box"><img src="assets/images/resource/category-4.png" alt=""></figure>
                         <h5><a href="index.html">Gents Collections</a></h5>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>

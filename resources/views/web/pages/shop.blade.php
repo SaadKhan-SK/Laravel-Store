@@ -142,44 +142,46 @@
                             <div class="col-lg-3 col-md-6 col-sm-12 shop-block">
                                 <div class="shop-block-one">
                                     <div class="inner-box">
-                                        <figure class="image-box">
-                                            <img src="{{ asset('upload/' . $product->image) }}" alt="">
-                                            @if (strtotime($product->created_at) > strtotime('-1 week'))
-                                                <span class="category green-bg">New</span>
-                                            @endif
-                                            @if ($product->discount_percentage)
-                                                <span
-                                                    class="category red-bg">{{ number_format($product->discount_percentage, 0) }}
-                                                    % off</span>
-                                            @endif
+                                        
+                                            <figure class="image-box">
+                                                <a href="{{route('product.web',$product->slug)}}">
+                                                    <img src="{{ asset('upload/' . $product->image) }}" alt="">
+                                                    @if (strtotime($product->created_at) > strtotime('-1 week'))
+                                                        <span class="category green-bg">New</span>
+                                                    @endif
+                                                    @if ($product->discount_percentage)
+                                                        <span
+                                                            class="category red-bg">{{ number_format($product->discount_percentage, 0) }}
+                                                            % off</span>
+                                                    @endif
 
-                                            <ul class="info-list clearfix">
-                                                <li><a href="index.html"><i class="flaticon-heart"></i></a></li>
-                                                <li><a class="add-to-cart-btn" data-product-id="{{ $product->id }}">Add
-                                                        to cart</a></li>
-                                                <li><a href="{{ asset('upload/' . $product->image) }}"
-                                                        class="lightbox-image" data-fancybox="gallery"><i
-                                                            class="flaticon-search"></i></a></li>
-                                            </ul>
-                                        </figure>
-                                        <div class="lower-content">
-                                            <a href="{{route('product.web',$product->slug)}}">{{ $product->name }}</a>
-                                            @if ($product->discount_percentage)
-                                                <div class="flex">
-                                                    <span class="original-price"
-                                                        style="font-size: 11px; color: #222; text-decoration: line-through">Rs.
-                                                        {{ number_format($product->price, 0) }}</span>
-                                                    @php
-                                                        $discountedPrice = $product->price - $product->price * ($product->discount_percentage / 100);
-                                                    @endphp
-                                                    <span class="discounted-price" style="color: #222;">Rs.
-                                                        {{ number_format($discountedPrice, 0) }}</span>
-                                                </div>
-                                            @else
-                                                <span class="price">Rs. {{ number_format($product->price, 0) }}</span>
-                                            @endif
-                                        </div>
-
+                                                </a>
+                                                <ul class="info-list clearfix">
+                                                    <li><a href="index.html"><i class="flaticon-heart"></i></a></li>
+                                                    <li><a class="add-to-cart-btn" data-product-id="{{ $product->id }}">Add
+                                                            to cart</a></li>
+                                                    <li><a href="{{ asset('upload/' . $product->image) }}"
+                                                            class="lightbox-image" data-fancybox="gallery"><i
+                                                                class="flaticon-search"></i></a></li>
+                                                </ul>
+                                            </figure>
+                                            <div class="lower-content">
+                                                <a href="{{route('product.web',$product->slug)}}">{{ $product->name }}</a>
+                                                @if ($product->discount_percentage)
+                                                    <div class="flex">
+                                                        <span class="original-price"
+                                                            style="font-size: 11px; color: #222; text-decoration: line-through">Rs.
+                                                            {{ number_format($product->price, 0) }}</span>
+                                                        @php
+                                                            $discountedPrice = $product->price - $product->price * ($product->discount_percentage / 100);
+                                                        @endphp
+                                                        <span class="discounted-price" style="color: #222;">Rs.
+                                                            {{ number_format($discountedPrice, 0) }}</span>
+                                                    </div>
+                                                @else
+                                                    <span class="price">Rs. {{ number_format($product->price, 0) }}</span>
+                                                @endif
+                                            </div>
                                     </div>
                                 </div>
                             </div>
