@@ -397,6 +397,7 @@ $(document).ready(function() {
             var today = new Date();
             var lastDisplayedDate = null;
             $('.user-chat').show();
+<<<<<<< HEAD
             for (let index = 0; index < response.messages[0].messages.length; index++) {
                 var messages = response.messages[0];
                 var message = messages.messages[index];
@@ -408,6 +409,15 @@ $(document).ready(function() {
                 $('#user_name').text(receiver.name)
                 $('#user_image').attr('src', '{{ asset("upload") }}'+'/' + profile.image);
                 $('#user_profile_link').attr('href', '{{ route("auth.user.profile", "id")}}'.replace('id', receiver.id));
+=======
+            for (let index = 0; index < response.messages.messages.length; index++) {
+                var message = response.messages.messages[index];
+                $('.chat-leftsidebar').removeAttr('style');
+                $('.user-chat').show();
+                $('#user_name').text(message.receiver.name)
+                $('#user_image').attr('src', '{{ asset("upload") }}'+'/' + message.get_profile.image);
+                $('#user_profile_link').attr('href', '{{ route("auth.user.profile", "id")}}'.replace('id', message.receiver.id));
+>>>>>>> e0767c3501f6cb5014f1d6ae9ded71a6cbdc5fe3
                 var time = new Date(message.created_at); // Convert the created_at timestamp to a Date object
                 var formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Format the time as 'HH:MM'
                 var dateDiff = Math.floor((today - time) / (1000 * 60 * 60 * 24)); // Calculate the difference in days
@@ -437,7 +447,11 @@ $(document).ready(function() {
                         '<div class="conversation-list">' +
                         '<div class="ctext-wrap">' +
                         '<div class="ctext-wrap-content">' +
+<<<<<<< HEAD
                         '<h5 class="conversation-name"><a href="#" class="user-name">' + sender.name + '</a> <span class="time">' + formattedTime + '</span></h5>' +
+=======
+                        '<h5 class="conversation-name"><a href="#" class="user-name">' + message.sender.name + '</a> <span class="time">' + formattedTime + '</span></h5>' +
+>>>>>>> e0767c3501f6cb5014f1d6ae9ded71a6cbdc5fe3
                         '<p class="mb-0">' + message.content + '</p>' +
                         '</div>' +
                         '<div class="dropdown align-self-start">' +
@@ -461,7 +475,11 @@ $(document).ready(function() {
                         '<div class="conversation-list">' +
                         '<div class="ctext-wrap">' +
                         '<div class="ctext-wrap-content">' +
+<<<<<<< HEAD
                         '<h5 class="conversation-name"><a href="#" class="user-name">' + sender.name + '</a> <span class="time">' + formattedTime + '</span>' +
+=======
+                        '<h5 class="conversation-name"><a href="#" class="user-name">' + message.sender.name + '</a> <span class="time">' + formattedTime + '</span>' +
+>>>>>>> e0767c3501f6cb5014f1d6ae9ded71a6cbdc5fe3
                         '</h5>' +
                         '<p class="mb-0">' + message.content + '</p>' +
                         '</div>' +

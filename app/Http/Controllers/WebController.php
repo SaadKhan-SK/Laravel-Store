@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\CmsService;
 use App\Models\Product;
 use App\Models\Review;
-use App\Models\Slider;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,17 +16,7 @@ class WebController extends Controller
 {
     public function home()
     {
-        $sliders = Slider::all();
-        $data['sliders'] = $sliders;
-        
-        $categories = Category::activeCategories()->get();
-        $data['categories'] = $categories;
-        
-        // echo "<pre>";
-        // echo print_r($data['sliders']);
-        // echo exit;
-
-        return view('web.pages.home')->with(['data' => $data]);
+        return view('web.pages.home');
     }
     public function about()
     {

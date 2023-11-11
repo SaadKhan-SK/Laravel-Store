@@ -32,7 +32,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Serivces</h4>
+                            <h4 class="card-title">Categories</h4>
                             {{-- <p class="card-title-desc">DataTables has most features enabled by
                                 default, so all you need to do to use it with your own tables is to call
                                 the construction function: <code>$().DataTable();</code>.
@@ -55,7 +55,7 @@
                                     <tr>
                                         <td>{{ $service->id }}</td>
                                         <td><img src="{{ asset('upload/'.$service->image) }}" class="avatar-sm rounded-circle me-2" width="50" height="50" alt="">{{ $service->name }}</td>
-                                        <td><a class="btn btn-info btn-sm mx-2" href="{{ route('admin.cms.view-service',['id'=>$service->id])}}"><i class="mdi mdi-eye d-block font-size-16"></i></a><a class="btn btn-success btn-sm mx-2" href="{{ route('admin.cms.service',['id'=>$service->id])}}"><i class="mdi mdi-pencil d-block font-size-16"></i></a> <a class="delete btn btn-danger btn-sm" title="Delete" href="{{ route('admin.cms.delete-service',['id'=>$service->id])}}"><i class="mdi mdi-trash-can d-block font-size-16"></i></a></td>
+                                        <td><a class="btn btn-success btn-sm mx-2" href="{{ route('admin.cms.view-service',['id'=>$service->id])}}"><i class="mdi mdi-eye d-block font-size-16"></i></a><a class="btn btn-success btn-sm mx-2" href="{{ route('admin.cms.service',['id'=>$service->id])}}"><i class="mdi mdi-pencil d-block font-size-16"></i></a> <a class="delete btn btn-danger btn-sm" title="Delete" href="{{ route('admin.cms.delete-service',['id'=>$service->id])}}"><i class="mdi mdi-trash-can d-block font-size-16"></i></a></td>
                                     </tr>
                                         @endforeach
                                 </tbody>

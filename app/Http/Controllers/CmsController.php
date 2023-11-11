@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Libraries\Generic;
 use App\Models\About;
 use App\Models\CmsService;
-use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -81,7 +80,7 @@ class CmsController extends Controller
                 'name' => 'required',
                 'description' => 'required',
                 'button' => 'required',
-                'image' => $request->id == null ? 'required|image' : 'nullable|image'
+                'image' => 'required|image'
             ], [
                 'name.required' => 'Name is required',
                 'description.required' => 'Description is required',
@@ -140,91 +139,6 @@ class CmsController extends Controller
         $result = $service->delete();
         if ($result) {    
             return redirect()->to(route('admin.cms.services'))->with('success', "Services Deleted Successfully");
-        } else {
-            return redirect()->back()->with('fail', "Something went wrong!");
-        }
-    }
-    public function slider(Request $request)
-    {
-        $data=[];
-        if($request->id)
-        {
-            $sliders = Slider::findOrFail($request->id);
-            $data['slider'] = $sliders;
-        }
-
-        if ($request->isMethod('post')) {
-            $this->validate($request, [
-                'heading' => 'required',
-                'discount' => 'required',
-                'heading_2' => 'required',
-                'sub_heading' => 'required',
-                'description' => 'required',
-                'button' => 'required',
-                'image' => $request->id == null ? 'required|image' : 'nullable|image'
-            ], [
-                'heading.required' => 'Heading is required',
-                'discount.required' => 'Discount is required',
-                'heading_2.required' => 'Heading 2 is required',
-                'sub_heading.required' => 'Sub Heading is required',
-                'description.required' => 'Description is required',
-                'button.required' => 'Button Text is required',
-                'image.required' => "Please upload the image",
-                'image.image' => "Please upload an image, not a file"
-            ]);
-    
-            $value = [
-                'heading' => $request->heading,
-                'heading_2' => $request->heading_2,
-                'sub_heading' => $request->sub_heading,
-                'discount' => $request->discount,
-                'description' => $request->description,
-                'button' => $request->button,
-            ];
-    
-            if ($request->hasFile('image')) {
-                $value['image'] = Generic::upload_image($request->file('image'));
-            }
-    
-            // $sliders = null;
-    
-            if ($request->id) {
-                $sliders = Slider::findOrFail(1);
-                $sliders->update($value);
-                $message = "Slider Updated Successfully";
-            } else {
-                $sliders = Slider::create($value);
-                $message = "Slider Added Successfully";
-            }
-    
-            if ($sliders) {    
-                return redirect()->to(route('admin.cms.sliders'))->with('success', $message);
-            } else {
-                return redirect()->back()->with('fail', "Something went wrong!");
-            }
-        }
-        return view('admin.cms.Slider.slider')->with(["data"=>$data]);
-    }
-    public function allSliders()
-    {
-        $sliders = Slider::all();
-        $data['sliders'] = $sliders;
-
-        return view('admin.cms.Slider.allSliders')->with(['data'=>$data]);
-    }
-    public function viewSlider(Request $request)
-    {
-        $sliders = Slider::findOrFail($request->id);
-        $data['slider'] = $sliders;
-
-        return view('admin.cms.Slider.viewSlider')->with(['data'=>$data]);
-    }
-    public function deleteSlider(Request $request)
-    {
-        $slider = Slider::findOrFail($request->id);
-        $result = $slider->delete();
-        if ($result) {    
-            return redirect()->to(route('admin.cms.sliders'))->with('success', "Slider Deleted Successfully");
         } else {
             return redirect()->back()->with('fail', "Something went wrong!");
         }

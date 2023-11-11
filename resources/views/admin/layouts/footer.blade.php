@@ -227,7 +227,6 @@
 <script src="{{ asset('assets/admin//js/pages/lightbox.init.js')}}"></script>
 <!-- App js -->
 <script src="{{ asset('assets/admin/js/app.js') }}"></script>
-@stack('chat')
 <script>
     //Classic editors
     $(document).ready(function() {
@@ -242,27 +241,7 @@
 
 
 
-        $(".delete").click(function(e) {
-            e.preventDefault();
-            var href = $(this).attr("href");
-            console.log(href)
 
-            // Open SweetAlert confirmation dialog
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You will not be able to recover this data!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // If confirmed, proceed with the delete action
-                    window.location.href = href;
-                }
-            });
-        });
 
 
 
@@ -340,6 +319,8 @@
 
     })
 </script>
+
+
 </body>
 
 </html>

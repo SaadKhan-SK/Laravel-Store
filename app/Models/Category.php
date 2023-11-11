@@ -19,8 +19,4 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
-    public function scopeActiveCategories($query)
-    {
-        return $query->where('status', 1);
-    }
 }

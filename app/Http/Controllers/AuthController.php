@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Libraries\Generic;
-use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +27,6 @@ class AuthController extends Controller
             {
                 if(Auth()->user()->role == 'Admin')
                 {
-                    
                     return redirect()->route('admin.dashboard')->with('success',"Login Successfully");
                 }
                 else if(Auth()->user()->role == 'Vendor')
@@ -46,7 +43,6 @@ class AuthController extends Controller
                 return redirect()->back()->with("fail","Wrong Credentials");
             }
         }
-        
         return view('admin.auth.login');
     }
     public function register(Request $request){
@@ -61,9 +57,6 @@ class AuthController extends Controller
             $user = User::create($data);
             $user->role = "Admin";
             $result = $user->save();
-            $profile = new Profile();
-            $profile->user_id = $user->id;
-            $profile->save();
             auth()->login($user);
             if($result)
             {
@@ -76,8 +69,6 @@ class AuthController extends Controller
         }
         return view('admin.auth.register');
     }
-
-    
     public function logout()
     {
         Auth::logout();

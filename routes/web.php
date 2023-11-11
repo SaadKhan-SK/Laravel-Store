@@ -4,10 +4,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CmsController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
@@ -52,7 +50,6 @@ Route::get('/cart-count',[CartController::class,'cartCount'])->name('cart.count'
 Route::middleware(['auth','role.check:Admin'])->group(function(){
     Route::prefix('admin')->group( function(){
         Route::get('dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
-        Route::get('chat',[AdminController::class,'chat'])->name('admin.chat');
 
         //Product Routes
         Route::get('products',[ProductController::class,'product'])->name('admin.product');
@@ -85,19 +82,11 @@ Route::middleware(['auth','role.check:Admin'])->group(function(){
 
         //CMS Routes
         Route::prefix('cms')->group(function(){
-            //About Route
             Route::match(['get','post'],'about',[CmsController::class,'about'])->name('admin.cms.about');
-            //Service Routes
             Route::match(['get','post'],'service',[CmsController::class,'services'])->name('admin.cms.service');
             Route::match(['get','post'],'services',[CmsController::class,'allServices'])->name('admin.cms.services');
             Route::match(['get','post'],'delete-service',[CmsController::class,'deleteService'])->name('admin.cms.delete-service');
             Route::match(['get','post'],'view-service',[CmsController::class,'viewService'])->name('admin.cms.view-service');
-            
-            //Slider Routes
-            Route::match(['get','post'],'slider',[CmsController::class,'slider'])->name('admin.cms.slider');
-            Route::match(['get','post'],'sliders',[CmsController::class,'allSliders'])->name('admin.cms.sliders');
-            Route::match(['get','post'],'delete-slider',[CmsController::class,'deleteSlider'])->name('admin.cms.delete-slider');
-            Route::match(['get','post'],'view-slider',[CmsController::class,'viewSlider'])->name('admin.cms.view-slider');
         });
     });
 });
@@ -108,9 +97,6 @@ Route::prefix('auth')->group( function(){
     Route::match(['get','post'],'login',[AuthController::class,'login'])->name('auth.login');
     Route::match(['get','post'],'register',[AuthController::class,'register'])->name('auth.register');
     Route::match(['get','post'],'logout',[AuthController::class,'logout'])->name('auth.logout');
-    Route::match(['get','post'],'profile-edit',[ProfileController::class,'profile'])->name('auth.profile-edit');
-    Route::match(['get','post'],'profile',[ProfileController::class,'viewProfile'])->name('auth.profile');
-    Route::match(['get','post'],'profile-user/{id}',[ProfileController::class,'getUserProfile'])->name('auth.user.profile');
 });
 
 
@@ -128,17 +114,5 @@ Route::middleware(['auth','role.check:Vendor'])->group(function(){
         Route::match(['get','post'],'update-status',[ProductController::class,'updateStatus'])->name('vendor.update-status');
         Route::match(['get','post'],'delete-product',[ProductController::class,'deleteProduct'])->name('vendor.delete-product');
         Route::match(['get', 'post', 'delete'], 'vendor-product-gallery', [ProductController::class, 'deleteGallery'])->name('vendor.delete-gallery');
-    });
-});
-
-
-//Message Route
-Route::middleware(['auth'])->group(function(){
-    Route::prefix('message')->group(function(){
-        Route::post('send',[ChatController::class,'sendMessage'])->name('message.send');
-        Route::get('inbox-message/{id}',[ChatController::class,'fetchMessages'])->name('message.inbox.message');
-    });
-    Route::prefix('contact')->group(function(){
-        Route::post('add',[ChatController::class,'addContact'])->name('contact.add');
     });
 });
